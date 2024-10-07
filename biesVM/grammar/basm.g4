@@ -17,6 +17,8 @@ mnemonic:
     | 'APP'
     | 'RET'
     | 'ADD'
+    | 'POP'
+    | 'SWP'
     | 'HLT';
 
 // Lexer

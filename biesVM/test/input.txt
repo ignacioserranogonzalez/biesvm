@@ -9,6 +9,8 @@ BLD 0 1
 APP
 APP
 PRN
+LDV 666
+POP
 HLT
 $END
 

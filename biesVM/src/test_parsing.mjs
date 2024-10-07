@@ -102,6 +102,20 @@ class ADD extends Instruction {
     }
 }
 
+class POP extends Instruction {
+    execute() {
+        this.vm.S.pop()
+        return true
+    }
+}
+
+class SWP extends Instruction {
+    execute() {
+        this.vm.S.swap()
+        return true
+    }
+}
+
 class HLT extends Instruction {
     execute() {
         throw new Error('\n>>> Program terminated by HLT')
@@ -119,6 +133,8 @@ class InstructionSet {
             APP: () => new APP(),
             RET: () => new RET(),
             ADD: () => new ADD(),
+            POP: () => new POP(),
+            SWP: () => new SWP(),
             HLT: () => new HLT(),
         }
     }
