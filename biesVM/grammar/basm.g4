@@ -19,10 +19,18 @@ mnemonic:
     | 'ADD'
     | 'POP'
     | 'SWP'
+    | 'NEG'
+    | 'SGN'
+    | 'EQ'
+    | 'GT'
+    | 'GTE'
+    | 'LT'
+    | 'LTE'
     | 'HLT';
 
 // Lexer
 
 INT     : '-'? [0-9]+ ;
 STR     : '\'' .*? '\'' ;
+COMMENT : ';' ~[\r\n]* -> skip ;
 WS      : [ \t\r\n]+ -> skip ;

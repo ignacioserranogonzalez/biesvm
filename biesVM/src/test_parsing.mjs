@@ -95,9 +95,9 @@ class RET extends Instruction {
 
 class ADD extends Instruction {
     execute() {
-        const x = this.vm.S.pop()
-        const y = this.vm.S.pop()
-        this.vm.S.push(x + y)
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        this.vm.S.push(value1 + value2)
         return true
     }
 }
@@ -112,6 +112,69 @@ class POP extends Instruction {
 class SWP extends Instruction {
     execute() {
         this.vm.S.swap()
+        return true
+    }
+}
+
+class NEG extends Instruction {
+    execute() {
+        if(typeof this.vm.S.peek() === 'number'){
+            const value = this.vm.S.pop()
+            this.vm.S.push(-value)
+        }
+        return true
+    }
+}
+
+class SGN extends Instruction {
+    execute() {
+        const value = this.vm.S.pop()
+        value > 0 ? this.vm.S.push(1) : this.vm.S.push(0)
+        return true
+    }
+}
+
+class EQ extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        value1 === value2 ? this.vm.S.push(1) : this.vm.S.push(0)
+        return true
+    }
+}
+
+class GT extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        value1 > value2 ? this.vm.S.push(1) : this.vm.S.push(0)
+        return true
+    }
+}
+
+class GTE extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        value1 >= value2 ? this.vm.S.push(1) : this.vm.S.push(0)
+        return true
+    }
+}
+
+class LT extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        value1 < value2 ? this.vm.S.push(1) : this.vm.S.push(0)
+        return true
+    }
+}
+
+class LTE extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        value1 <= value2 ? this.vm.S.push(1) : this.vm.S.push(0)
         return true
     }
 }
@@ -135,6 +198,13 @@ class InstructionSet {
             ADD: () => new ADD(),
             POP: () => new POP(),
             SWP: () => new SWP(),
+            NEG: () => new NEG(),
+            SGN: () => new SGN(),
+            EQ: () => new EQ(),
+            GT: () => new GT(),
+            GTE: () => new GTE(),
+            LT: () => new LT(),
+            LTE: () => new LTE(),
             HLT: () => new HLT(),
         }
     }
