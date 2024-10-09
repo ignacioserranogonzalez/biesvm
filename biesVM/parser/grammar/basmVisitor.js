@@ -42,6 +42,12 @@ export default class basmVisitor extends antlr4.tree.ParseTreeVisitor {
 	}
 
 
+	// Visit a parse tree produced by basmParser#typeArg.
+	visitTypeArg(ctx) {
+	  return this.visitChildren(ctx);
+	}
+
+
 	// Visit a parse tree produced by basmParser#mnemonic.
 	visitMnemonic(ctx) {
 	  return this.visitChildren(ctx);

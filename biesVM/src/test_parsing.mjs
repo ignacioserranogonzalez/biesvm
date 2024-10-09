@@ -197,12 +197,9 @@ class SNT extends Instruction {
 
 class CAT extends Instruction {
     execute() {
-
         const value1 = this.vm.S.pop()
         const value2 = this.vm.S.pop()
-
         this.vm.S.push(value1 + value2)
-
         return true
     }
 }
@@ -210,6 +207,40 @@ class CAT extends Instruction {
 class TOS extends Instruction {
     execute() {
         this.vm.S.push(this.vm.S.pop().toString())
+        return true
+    }
+}
+
+class CST extends Instruction {
+    execute() {
+        try{
+            const value = this.vm.S.pop()
+            const type = this.args[0]
+            
+            switch(type){
+                case 'number':
+                    this.vm.S.push(Number(value))
+                    break
+                case 'list':
+                    //this.vm.S.push([...String(value)]) // falta implementar listas
+                    break
+                case 'string':
+                    this.vm.S.push(String(value))
+                    break
+            }
+
+        } catch(e){
+            throw new Error(`\n>>> Casting error: ${e.message}`)
+        }
+        return true
+    }
+}
+
+class INO extends Instruction { // falt la implementacion de listas
+    execute() {
+        const value = this.vm.S.pop()
+        const type = this.args[0]
+        typeof value === type ? this.vm.S.push(type) : this.vm.S.push(value)
         return true
     }
 }
@@ -244,6 +275,8 @@ class InstructionSet {
             SNT: () => new SNT(),
             CAT: () => new CAT(),
             TOS: () => new TOS(),
+            CST: () => new CST(),
+            INO: () => new INO(),
             HLT: () => new HLT(),
         }
     }
@@ -269,10 +302,8 @@ class InstructionVisitor extends basmVisitor {
     visitArg(ctx) {
         if (ctx.INT()) return parseInt(ctx.INT().getText(), 10)
         if (ctx.STR()) return ctx.STR().getText().replace(/^"|"$|"/g, '');
-        else if (ctx.funcArg()) {
-            const funcText = ctx.funcArg().getText()
-            return parseInt(funcText.slice(1), 10)
-        }
+        if (ctx.funcArg()) return parseInt(ctx.funcArg().getText().slice(1), 10)
+        else if(ctx.typeArg()) return ctx.typeArg().getText().toLowerCase()
         return null
     }
 
@@ -280,9 +311,7 @@ class InstructionVisitor extends basmVisitor {
         this.context = ctx.INT(0).getText()
         const args = parseInt(ctx.INT(1).getText(), 10)
         const parent = ctx.INT(2).getText()
-
         this.vm.C.pushBlock(this.context, new Block(this.context, args, parent))
-
         return null
     }
 

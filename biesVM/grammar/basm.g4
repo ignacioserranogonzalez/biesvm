@@ -6,8 +6,9 @@ program : block*;
 block   : func inst* '$END';
 func    : '$FUN' '$' INT 'ARGS:' INT 'PARENT:' '$' INT ;
 inst    : mnemonic arg* ;
-arg     : INT | STR | funcArg;
+arg     : INT | STR | funcArg | typeArg;
 funcArg : '$' INT; 
+typeArg : TYPE ;
 mnemonic: 
       'LDV' 
     | 'PRN' 
@@ -30,6 +31,8 @@ mnemonic:
     | 'SNT'
     | 'CAT'
     | 'TOS'
+    | 'CST'
+    | 'INO'
     | 'HLT';
 
 // Lexer
@@ -37,5 +40,6 @@ mnemonic:
 INT     : '-'? [0-9]+ ;
 STR : '"' ( ESC | ~('"' | '\n') )* '"' ;
 fragment ESC : '\\' '"' ;
+TYPE    : 'NUMBER' | 'LIST' | 'STRING' ;
 COMMENT : ';' ~[\r\n]* -> skip ;
 WS      : [ \t\r\n]+ -> skip ;
