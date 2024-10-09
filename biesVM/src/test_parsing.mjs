@@ -182,10 +182,16 @@ class LTE extends Instruction {
 class NOT extends Instruction {
     execute() {
 
-        if(!this.vm.S.peek) {
-            this.vm.S.pop()
-            this.vm.S.push(0)
-        }
+        !this.vm.S.peek() ? (this.vm.S.pop(), this.vm.S.push(0)) : null
+
+        return true
+    }
+}
+
+class SNT extends Instruction {
+    execute() {
+
+        
         
         return true
     }
@@ -218,6 +224,7 @@ class InstructionSet {
             LT: () => new LT(),
             LTE: () => new LTE(),
             NOT: () => new NOT(),
+            SNT: () => new SNT(),
             HLT: () => new HLT(),
         }
     }

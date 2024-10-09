@@ -27,6 +27,7 @@ mnemonic:
     | 'LT'
     | 'LTE'
     | 'NOT'
+    | 'SNT'
     | 'HLT';
 
 // Lexer
