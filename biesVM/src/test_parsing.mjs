@@ -236,11 +236,24 @@ class CST extends Instruction {
     }
 }
 
-class INO extends Instruction { // falt la implementacion de listas
+class INO extends Instruction { // falta la implementacion de listas
     execute() {
         const value = this.vm.S.pop()
         const type = this.args[0]
         typeof value === type ? this.vm.S.push(type) : this.vm.S.push(value)
+        return true
+    }
+}
+
+class NOP extends Instruction {
+    execute() {
+        return true
+    }
+}
+
+class BR extends Instruction {
+    execute() {
+        this.vm.currentBlock.pc = this.args[0] - 1
         return true
     }
 }
@@ -277,6 +290,8 @@ class InstructionSet {
             TOS: () => new TOS(),
             CST: () => new CST(),
             INO: () => new INO(),
+            NOP: () => new NOP(),
+            BR: () => new BR(),
             HLT: () => new HLT(),
         }
     }

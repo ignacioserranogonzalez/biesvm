@@ -33,6 +33,8 @@ mnemonic:
     | 'TOS'
     | 'CST'
     | 'INO'
+    | 'NOP'
+    | 'BR'
     | 'HLT';
 
 // Lexer

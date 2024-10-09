@@ -3,22 +3,22 @@
 import antlr4 from 'antlr4';
 import basmVisitor from './basmVisitor.js';
 
-const serializedATN = [4,1,34,61,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,
+const serializedATN = [4,1,36,61,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,
 2,5,7,5,2,6,7,6,2,7,7,7,1,0,5,0,18,8,0,10,0,12,0,21,9,0,1,1,1,1,5,1,25,8,
 1,10,1,12,1,28,9,1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,5,
 3,43,8,3,10,3,12,3,46,9,3,1,4,1,4,1,4,1,4,3,4,52,8,4,1,5,1,5,1,5,1,6,1,6,
-1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,1,1,0,6,29,58,0,19,1,0,0,0,2,22,1,
+1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,1,1,0,6,31,58,0,19,1,0,0,0,2,22,1,
 0,0,0,4,31,1,0,0,0,6,40,1,0,0,0,8,51,1,0,0,0,10,53,1,0,0,0,12,56,1,0,0,0,
 14,58,1,0,0,0,16,18,3,2,1,0,17,16,1,0,0,0,18,21,1,0,0,0,19,17,1,0,0,0,19,
 20,1,0,0,0,20,1,1,0,0,0,21,19,1,0,0,0,22,26,3,4,2,0,23,25,3,6,3,0,24,23,
 1,0,0,0,25,28,1,0,0,0,26,24,1,0,0,0,26,27,1,0,0,0,27,29,1,0,0,0,28,26,1,
-0,0,0,29,30,5,1,0,0,30,3,1,0,0,0,31,32,5,2,0,0,32,33,5,3,0,0,33,34,5,30,
-0,0,34,35,5,4,0,0,35,36,5,30,0,0,36,37,5,5,0,0,37,38,5,3,0,0,38,39,5,30,
+0,0,0,29,30,5,1,0,0,30,3,1,0,0,0,31,32,5,2,0,0,32,33,5,3,0,0,33,34,5,32,
+0,0,34,35,5,4,0,0,35,36,5,32,0,0,36,37,5,5,0,0,37,38,5,3,0,0,38,39,5,32,
 0,0,39,5,1,0,0,0,40,44,3,14,7,0,41,43,3,8,4,0,42,41,1,0,0,0,43,46,1,0,0,
-0,44,42,1,0,0,0,44,45,1,0,0,0,45,7,1,0,0,0,46,44,1,0,0,0,47,52,5,30,0,0,
-48,52,5,31,0,0,49,52,3,10,5,0,50,52,3,12,6,0,51,47,1,0,0,0,51,48,1,0,0,0,
-51,49,1,0,0,0,51,50,1,0,0,0,52,9,1,0,0,0,53,54,5,3,0,0,54,55,5,30,0,0,55,
-11,1,0,0,0,56,57,5,32,0,0,57,13,1,0,0,0,58,59,7,0,0,0,59,15,1,0,0,0,4,19,
+0,44,42,1,0,0,0,44,45,1,0,0,0,45,7,1,0,0,0,46,44,1,0,0,0,47,52,5,32,0,0,
+48,52,5,33,0,0,49,52,3,10,5,0,50,52,3,12,6,0,51,47,1,0,0,0,51,48,1,0,0,0,
+51,49,1,0,0,0,51,50,1,0,0,0,52,9,1,0,0,0,53,54,5,3,0,0,54,55,5,32,0,0,55,
+11,1,0,0,0,56,57,5,34,0,0,57,13,1,0,0,0,58,59,7,0,0,0,59,15,1,0,0,0,4,19,
 26,44,51];
 
 
@@ -36,12 +36,13 @@ export default class basmParser extends antlr4.Parser {
                             "'LDF'", "'APP'", "'RET'", "'ADD'", "'POP'", 
                             "'SWP'", "'NEG'", "'SGN'", "'EQ'", "'GT'", "'GTE'", 
                             "'LT'", "'LTE'", "'NOT'", "'SNT'", "'CAT'", 
-                            "'TOS'", "'CST'", "'INO'", "'HLT'" ];
+                            "'TOS'", "'CST'", "'INO'", "'NOP'", "'BR'", 
+                            "'HLT'" ];
     static symbolicNames = [ null, null, null, null, null, null, null, null, 
                              null, null, null, null, null, null, null, null, 
                              null, null, null, null, null, null, null, null, 
-                             null, null, null, null, null, null, "INT", 
-                             "STR", "TYPE", "COMMENT", "WS" ];
+                             null, null, null, null, null, null, null, null, 
+                             "INT", "STR", "TYPE", "COMMENT", "WS" ];
     static ruleNames = [ "program", "block", "func", "inst", "arg", "funcArg", 
                          "typeArg", "mnemonic" ];
 
@@ -98,7 +99,7 @@ export default class basmParser extends antlr4.Parser {
 	        this.state = 26;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
-	        while((((_la) & ~0x1f) === 0 && ((1 << _la) & 1073741760) !== 0)) {
+	        while((((_la) & ~0x1f) === 0 && ((1 << _la) & 4294967232) !== 0)) {
 	            this.state = 23;
 	            this.inst();
 	            this.state = 28;
@@ -171,7 +172,7 @@ export default class basmParser extends antlr4.Parser {
 	        this.state = 44;
 	        this._errHandler.sync(this);
 	        _la = this._input.LA(1);
-	        while(((((_la - 3)) & ~0x1f) === 0 && ((1 << (_la - 3)) & 939524097) !== 0)) {
+	        while(((((_la - 3)) & ~0x1f) === 0 && ((1 << (_la - 3)) & 3758096385) !== 0)) {
 	            this.state = 41;
 	            this.arg();
 	            this.state = 46;
@@ -201,12 +202,12 @@ export default class basmParser extends antlr4.Parser {
 	        this.state = 51;
 	        this._errHandler.sync(this);
 	        switch(this._input.LA(1)) {
-	        case 30:
+	        case 32:
 	            this.enterOuterAlt(localctx, 1);
 	            this.state = 47;
 	            this.match(basmParser.INT);
 	            break;
-	        case 31:
+	        case 33:
 	            this.enterOuterAlt(localctx, 2);
 	            this.state = 48;
 	            this.match(basmParser.STR);
@@ -216,7 +217,7 @@ export default class basmParser extends antlr4.Parser {
 	            this.state = 49;
 	            this.funcArg();
 	            break;
-	        case 32:
+	        case 34:
 	            this.enterOuterAlt(localctx, 4);
 	            this.state = 50;
 	            this.typeArg();
@@ -296,7 +297,7 @@ export default class basmParser extends antlr4.Parser {
 	        this.enterOuterAlt(localctx, 1);
 	        this.state = 58;
 	        _la = this._input.LA(1);
-	        if(!((((_la) & ~0x1f) === 0 && ((1 << _la) & 1073741760) !== 0))) {
+	        if(!((((_la) & ~0x1f) === 0 && ((1 << _la) & 4294967232) !== 0))) {
 	        this._errHandler.recoverInline(this);
 	        }
 	        else {
@@ -350,11 +351,13 @@ basmParser.T__25 = 26;
 basmParser.T__26 = 27;
 basmParser.T__27 = 28;
 basmParser.T__28 = 29;
-basmParser.INT = 30;
-basmParser.STR = 31;
-basmParser.TYPE = 32;
-basmParser.COMMENT = 33;
-basmParser.WS = 34;
+basmParser.T__29 = 30;
+basmParser.T__30 = 31;
+basmParser.INT = 32;
+basmParser.STR = 33;
+basmParser.TYPE = 34;
+basmParser.COMMENT = 35;
+basmParser.WS = 36;
 
 basmParser.RULE_program = 0;
 basmParser.RULE_block = 1;
