@@ -181,9 +181,7 @@ class LTE extends Instruction {
 
 class NOT extends Instruction {
     execute() {
-
         !this.vm.S.peek() ? (this.vm.S.pop(), this.vm.S.push(0)) : null
-
         return true
     }
 }
@@ -193,6 +191,25 @@ class SNT extends Instruction {
         this.vm.S.pop() == '' ? 
             this.vm.S.push(1) : 
             this.vm.S.push(0)
+        return true
+    }
+}
+
+class CAT extends Instruction {
+    execute() {
+
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+
+        this.vm.S.push(value1 + value2)
+
+        return true
+    }
+}
+
+class TOS extends Instruction {
+    execute() {
+        this.vm.S.push(this.vm.S.pop().toString())
         return true
     }
 }
@@ -225,6 +242,8 @@ class InstructionSet {
             LTE: () => new LTE(),
             NOT: () => new NOT(),
             SNT: () => new SNT(),
+            CAT: () => new CAT(),
+            TOS: () => new TOS(),
             HLT: () => new HLT(),
         }
     }

@@ -1,1 +1,0 @@
-antlr -Dlanguage=JavaScript -no-listener -visitor -o parser grammar/basm.g4

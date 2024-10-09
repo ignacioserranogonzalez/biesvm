@@ -28,6 +28,8 @@ mnemonic:
     | 'LTE'
     | 'NOT'
     | 'SNT'
+    | 'CAT'
+    | 'TOS'
     | 'HLT';
 
 // Lexer
