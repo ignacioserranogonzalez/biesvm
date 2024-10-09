@@ -190,9 +190,9 @@ class NOT extends Instruction {
 
 class SNT extends Instruction {
     execute() {
-
-        
-        
+        this.vm.S.pop() == '' ? 
+            this.vm.S.push(1) : 
+            this.vm.S.push(0)
         return true
     }
 }
@@ -248,11 +248,9 @@ class InstructionVisitor extends basmVisitor {
     }
 
     visitArg(ctx) {
-        if (ctx.INT()) {
-            return parseInt(ctx.INT().getText(), 10)
-        } else if (ctx.STR()) {
-            return ctx.STR().getText()
-        } else if (ctx.funcArg()) {
+        if (ctx.INT()) return parseInt(ctx.INT().getText(), 10)
+        if (ctx.STR()) return ctx.STR().getText().replace(/^"|"$|"/g, '');
+        else if (ctx.funcArg()) {
             const funcText = ctx.funcArg().getText()
             return parseInt(funcText.slice(1), 10)
         }
