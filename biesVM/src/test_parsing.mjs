@@ -179,6 +179,18 @@ class LTE extends Instruction {
     }
 }
 
+class NOT extends Instruction {
+    execute() {
+
+        if(!this.vm.S.peek) {
+            this.vm.S.pop()
+            this.vm.S.push(0)
+        }
+        
+        return true
+    }
+}
+
 class HLT extends Instruction {
     execute() {
         throw new Error('\n>>> Program terminated by HLT')
@@ -205,6 +217,7 @@ class InstructionSet {
             GTE: () => new GTE(),
             LT: () => new LT(),
             LTE: () => new LTE(),
+            NOT: () => new NOT(),
             HLT: () => new HLT(),
         }
     }

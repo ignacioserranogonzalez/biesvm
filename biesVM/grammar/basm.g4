@@ -26,11 +26,13 @@ mnemonic:
     | 'GTE'
     | 'LT'
     | 'LTE'
+    | 'NOT'
     | 'HLT';
 
 // Lexer
 
 INT     : '-'? [0-9]+ ;
-STR     : '\'' .*? '\'' ;
+STR : '"' ( ESC | ~('"' | '\n') )* '"' ;
+fragment ESC : '\\' '"' ;
 COMMENT : ';' ~[\r\n]* -> skip ;
 WS      : [ \t\r\n]+ -> skip ;
