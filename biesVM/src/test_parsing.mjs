@@ -128,7 +128,7 @@ class APP extends Instruction {
 
         for (let i = 0; i < k; i++) {
             const value = this.vm.S.pop(); 
-            
+    
             this.vm.B.pushValue(fun, value); // Cambiar el nivel si es necesario
         }
 
@@ -712,6 +712,58 @@ class TOL extends Instruction {
     }
 }
 
+class STK extends Instruction {
+    /**
+     * Executes the STK (stack take) instruction.
+     *
+     * This method pops the top two values from the stack. The first value
+     * is considered the index to retrieve (k), and the second value is expected
+     * to be a stack (array). The method retrieves the value at the specified
+     * index from the stack. If the index is out of bounds, it pushes `null`
+     * onto the stack.
+     *
+     * @throws {Error} Throws an error if the index is out of range.
+     * @returns {boolean} Returns true to indicate that execution is complete.
+     */
+    execute() {
+        const index = this.args[0]
+        const stackSize = this.vm.S.stack.length
+
+        if (index >= 0 && index < stackSize) {
+            const value = this.vm.S.stack[stackSize - 1 - index]
+            this.vm.S.push(value) 
+        } else {
+            throw new Error("Index out of range")
+        }
+        return true;
+    }
+}
+
+class SRK extends Instruction {
+    /**
+     * Executes the SRK (stack remainder take) instruction.
+     *
+     * This method retrieves the index from the arguments. It creates a new array
+     * containing all elements from the specified index to the end of the stack
+     * and pushes that array onto the stack.
+     *
+     * @throws {Error} Throws an error if the index is out of range.
+     * @returns {boolean} Returns true to indicate that execution is complete.
+     */
+    execute() {
+        const index = this.args[0]; // Toma el índice k del argumento
+        const stackSize = this.vm.S.stack.length; // Tamaño actual del stack
+
+        if (index >= 0 && index < stackSize) {
+            const remainder = this.vm.S.stack.slice(stackSize - index); // Crea el resto del stack
+            this.vm.S.push(remainder); // Devuelve el resto al stack
+        } else {
+            throw new Error("Index out of range");
+        }
+        return true;
+    }
+}
+
 class HLT extends Instruction {
     /**
      * Executes the HLT (halt) instruction.
@@ -770,6 +822,8 @@ class InstructionSet {
             ['LTK', () => new LTK()],
             ['LRK', () => new LRK()],
             ['TOL', () => new TOL()],
+            ['STK', () => new STK()],
+            ['SRK', () => new SRK()],
             ['HLT', () => new HLT()]
         ]);
     }

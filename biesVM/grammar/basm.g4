@@ -48,6 +48,8 @@ mnemonic:
     | 'LTK'
     | 'LRK'
     | 'TOL'
+    | 'STK'
+    | 'SRK'
     | 'HLT';
 
 // Lexer
