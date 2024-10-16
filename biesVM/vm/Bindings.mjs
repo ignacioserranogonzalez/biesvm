@@ -1,32 +1,62 @@
-//Componente B: Bindings
-
 class Bindings {
     constructor() {
-        this.frames = []; 
+        this.frames = []; // Array que contendrá los contextos
+        this.createFrame(0)
     }
 
-    createFrame() {
-        this.frames.push([]);
+    // Crea un nuevo contexto en la posición k y lo inicializa con un array vacío
+    createFrame(k) {
+        if (!this.frames[k]) {
+            this.frames[k] = []; // Inicializa el contexto si no existe
+        } else {
+            throw new Error("Context already exists at this position"); // Opcional: maneja el caso en que el contexto ya existe
+        }
     }
 
-    deleteFrame() {
-        this.frames.pop();
+    // Elimina el contexto en la posición k
+    deleteFrame(k) {
+        if (this.frames[k]) {
+            this.frames[k] = null; // O eliminar completamente con `this.frames.splice(k, 1);`
+        } else {
+            throw new Error("No context found at this position"); // Maneja el caso si no existe el contexto
+        }
     }
 
-    setValue(level, key, value) { // nivel, pos, V
-        if (!this.frames[level]) throw new Error("Invalid environment level");
-        this.frames[level][key] = value;
+    // Establece un valor en el contexto especificado por k y la posición dentro de ese contexto
+    setValue(k, pos, value) {
+        // Verifica que el contexto exista
+        if (!this.frames[k]) throw new Error("Invalid context level");
+
+        // Establece el binding en la posición especificada
+        this.frames[k][pos] = [k, value]; // Guarda como [contexto, valor]
     }
 
-    pushValue(level, value) { // nivel, pos, V
-        if (!this.frames[level]) throw new Error("Invalid environment level");
-        this.frames[level].push(value);
+    // Método para agregar un valor al contexto especificado por k
+    pushValue(k, value) {
+        if (!this.frames[k]) throw new Error("Invalid context level");
+        this.frames[k].push([k, value]); // Agrega el nuevo binding al contexto
     }
 
-    getValue(level, key) { // nivel, pos
-        if (!this.frames[level]) throw new Error("Invalid environment level");
-        return this.frames[level][key];
+    // Obtiene un valor basado en el contexto y la posición
+    getValue(k, pos) {
+        if (!this.frames[k]) throw new Error("Invalid context level");
+        if (!this.frames[k][pos]) throw new Error("Invalid position in context");
+
+        return this.frames[k][pos][1]; // Retorna solo el valor
+    }
+
+    // Método para buscar un valor específico por contexto y valor
+    findValue(k, value) {
+        if (!this.frames[k]) throw new Error("Invalid context level");
+
+        for (let i = 0; i < this.frames[k].length; i++) {
+            const binding = this.frames[k][i];
+            if (binding && binding[1] === value) {
+                return binding[1]; // Retorna solo el valor si el valor coincide
+            }
+        }
+        return null; // Retorna null si no se encuentra
     }
 }
 
-export default Bindings
+export default Bindings;
