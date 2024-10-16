@@ -102,6 +102,33 @@ class ADD extends Instruction {
     }
 }
 
+class SUB extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        this.vm.S.push(value1 - value2)
+        return true
+    }
+}
+
+class MUL extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        this.vm.S.push(value1 * value2)
+        return true
+    }
+}
+
+class DIV extends Instruction {
+    execute() {
+        const value1 = this.vm.S.pop()
+        const value2 = this.vm.S.pop()
+        this.vm.S.push(value1 / value2)
+        return true
+    }
+}
+
 class POP extends Instruction {
     execute() {
         this.vm.S.pop()
@@ -358,6 +385,9 @@ class InstructionSet {
             ['APP', () => new APP()],
             ['RET', () => new RET()],
             ['ADD', () => new ADD()],
+            ['SUB', () => new SUB()],
+            ['MUL', () => new MUL()],
+            ['DIV', () => new DIV()],
             ['POP', () => new POP()],
             ['SWP', () => new SWP()],
             ['NEG', () => new NEG()],
