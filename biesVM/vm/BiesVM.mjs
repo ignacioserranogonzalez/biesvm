@@ -3,7 +3,17 @@ import Stack from './Stack.mjs';
 import Bindings from './Bindings.mjs';
 import Dump from './Dump.mjs';
 
+/**
+ * Represents the Bies virtual machine, responsible for executing the program.
+ * Implements the singleton pattern to ensure only one instance exists.
+ */
 class BiesVM {
+    /**
+     * Creates an instance of the BiesVM.
+     * Initializes the components necessary for execution, including
+     * the code storage, stack, bindings, and context dump.
+     * @throws {Error} Throws an error if trying to create multiple instances.
+     */
     constructor() {
         if (BiesVM.instance) {
             return BiesVM.instance;  // Retorna la instancia existente si ya fue creada
@@ -19,11 +29,20 @@ class BiesVM {
         BiesVM.instance = this;  // Guarda la instancia para futuras referencias
     }
 
+    /**
+     * Sets the current block to be executed.
+     * Updates the program counter to the parent of the specified block.
+     * @param {Block} block - The block to set as the current block.
+     */
     setCurrentBlock(block) {
         this.currentBlock = block
         this.pc = block.parent
     }
 
+    /**
+     * Executes the program starting from the current program counter.
+     * Iterates through blocks and executes instructions until the end of the program.
+     */
     execute() {
         this.currentBlock = this.C.peekBlock(this.pc) // $0
         
@@ -33,6 +52,11 @@ class BiesVM {
         }
     }
 
+    /**
+     * Executes the instructions within the specified block.
+     * Continues execution until no more instructions are left to execute.
+     * @param {Block} block - The block containing instructions to execute.
+     */
     executeBlock(block) {
         // console.log(`>>> Executing Block - Function: $${block.func}, Args: ${block.args}, Parent: $${block.parent}`);
         while (block.peek(block.pc).execute()) {

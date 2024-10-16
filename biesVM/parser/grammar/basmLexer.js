@@ -2,7 +2,12 @@
 // jshint ignore: start
 import antlr4 from 'antlr4';
 
-
+/**
+ * @constant {number[]} serializedATN - The serialized ATN (Abstract Syntax Tree) representation.
+ *
+ * This array represents the serialized version of an ATN used in parsing.
+ * Each number corresponds to a specific state or transition in the parser's state machine.
+ */
 const serializedATN = [4,0,50,333,6,-1,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,
 4,7,4,2,5,7,5,2,6,7,6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,
 12,2,13,7,13,2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,
@@ -107,16 +112,58 @@ const serializedATN = [4,0,50,333,6,-1,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,
 331,1,0,0,0,331,332,6,50,0,0,332,102,1,0,0,0,9,0,274,279,282,289,291,315,
 321,329,1,6,0,0];
 
-
+/**
+ * Deserializes an ATN (Abstract Syntax Tree) using ANTLR.
+ *
+ * @param {Array<number>} serializedATN - An array representing the serialized ATN.
+ * @returns {Object} The deserialized ATN.
+ */
 const atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
 
+/**
+ * Creates an array of DFA (Deterministic Finite Automaton) instances from the ATN's decision states.
+ *
+ * @type {Array<antlr4.dfa.DFA>}
+ * @returns {Array<antlr4.dfa.DFA>} An array of DFA instances corresponding to each decision state in the ATN.
+ */
 const decisionsToDFA = atn.decisionToState.map( (ds, index) => new antlr4.dfa.DFA(ds, index) );
 
 export default class basmLexer extends antlr4.Lexer {
 
+    /**
+     * The name of the grammar file.
+     * @type {string}
+     * @static
+     * @const
+     */
     static grammarFileName = "basm.g4";
+    /**
+     * An array of channel names used in the lexer.
+     * @type {Array<string>}
+     * @static
+     * @const
+     * @default [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ]
+     */
     static channelNames = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
+    /**
+     * An array of mode names for the lexer.
+     * @type {Array<string>}
+     * @static
+     * @const
+     * @default [ "DEFAULT_MODE" ]
+     */
 	static modeNames = [ "DEFAULT_MODE" ];
+
+    /**
+     * An array of literal names used in the grammar.
+     * Each entry corresponds to a token name, where the index represents
+     * the token type. The first entry (index 0) is typically reserved for
+     * the EOF token, which is why it is set to null.
+     *
+     * @type {Array<string|null>}
+     * @static
+     * @const
+     */
 	static literalNames = [ null, "'$END'", "'$FUN'", "'$'", "'ARGS:'", "'PARENT:'", 
                          "'['", "','", "']'", "'LDV'", "'PRN'", "'BST'", 
                          "'BLD'", "'LDF'", "'APP'", "'RET'", "'ADD'", "'SUB'", 
@@ -125,6 +172,18 @@ export default class basmLexer extends antlr4.Lexer {
                          "'SNT'", "'CAT'", "'TOS'", "'CST'", "'INO'", "'NOP'", 
                          "'BR'", "'BT'", "'BF'", "'LNT'", "'LIN'", "'LTK'", 
                          "'LRK'", "'TOL'", "'HLT'" ];
+
+    /**
+     * An array of symbolic names for tokens used in the grammar.
+     * Each entry corresponds to a token type, where the index represents
+     * the token type. The first few entries are typically reserved for
+     * special tokens such as EOF or specific patterns, which is why
+     * they are set to null.
+     *
+     * @type {Array<string|null>}
+     * @static
+     * @const
+     */
 	static symbolicNames = [ null, null, null, null, null, null, null, null, 
                           null, null, null, null, null, null, null, null, 
                           null, null, null, null, null, null, null, null, 
@@ -132,6 +191,17 @@ export default class basmLexer extends antlr4.Lexer {
                           null, null, null, null, null, null, null, null, 
                           null, null, null, null, null, "INT", "SIGNED_INT", 
                           "STR", "TYPE", "COMMENT", "WS" ];
+
+    /**
+     * An array of rule names for the grammar.
+     * Each entry corresponds to a parser rule defined in the grammar.
+     * The entries include token rules, and special token patterns.
+     * The naming convention (e.g., "T__0", "T__1") typically indicates specific tokens associated with grammar constructs.
+     *
+     * @type {Array<string>}
+     * @static
+     * @const
+     */
 	static ruleNames = [ "T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", 
                       "T__7", "T__8", "T__9", "T__10", "T__11", "T__12", 
                       "T__13", "T__14", "T__15", "T__16", "T__17", "T__18", 
@@ -142,6 +212,9 @@ export default class basmLexer extends antlr4.Lexer {
                       "T__43", "INT", "SIGNED_INT", "STR", "ESC", "TYPE", 
                       "COMMENT", "WS" ];
 
+    /**
+     * Constructs a new instance of the lexer.
+     */
     constructor(input) {
         super(input)
         this._interp = new antlr4.atn.LexerATNSimulator(this, atn, decisionsToDFA, new antlr4.atn.PredictionContextCache());
