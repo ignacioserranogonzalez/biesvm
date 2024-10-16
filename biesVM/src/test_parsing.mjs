@@ -42,12 +42,12 @@ class PRN extends Instruction {
 
 class BST extends Instruction {
     execute() {
-        const value = this.vm.S.pop()
-        this.vm.B.createFrame()
-        this.vm.B.setValue(this.args[0], this.args[1], value)
-        return true
+        const value = this.vm.S.pop();
+        this.vm.B.setValue(this.args[0], this.args[1], value);
+        return true;
     }
 }
+
 
 class BLD extends Instruction {
     execute() {
@@ -67,20 +67,28 @@ class LDF extends Instruction {
 
 class APP extends Instruction {
     execute() {
-        const fun = this.vm.S.pop()
-        const value = this.vm.S.pop()
+        const fun = this.vm.S.pop();
+        const k = this.args[0];
 
-        this.vm.B.createFrame()
-        this.vm.B.pushValue(fun, value)
+        if (this.vm.S.length < k) throw new Error("Not enough arguments on the stack");
+        this.vm.B.createFrame(fun);
 
-        this.vm.D.pushContext(this.vm.currentBlock.func, this.vm.currentBlock.pc + 1) // dump
+        for (let i = 0; i < k; i++) {
+            const value = this.vm.S.pop(); 
+            
+            this.vm.B.pushValue(fun, value); // Cambiar el nivel si es necesario
+        }
 
-        this.vm.setCurrentBlock(this.vm.C.peekBlock(fun))
-        this.vm.currentBlock.pc = 0
+        this.vm.D.pushContext(this.vm.currentBlock.func, this.vm.currentBlock.pc + 1);
+        this.vm.setCurrentBlock(this.vm.C.peekBlock(fun));
 
-        return false
+        this.vm.currentBlock.pc = 0;
+        console.log(this.vm.B.frames)
+
+        return false;
     }
 }
+
 
 class RET extends Instruction {
     execute() {
@@ -174,7 +182,9 @@ class GT extends Instruction {
     execute() {
         const value1 = this.vm.S.pop()
         const value2 = this.vm.S.pop()
-        value1 > value2 ? this.vm.S.push(1) : this.vm.S.push(0)
+        value1 > value2 ? 
+            this.vm.S.push(1) : 
+            this.vm.S.push(0)
         return true
     }
 }
@@ -287,14 +297,18 @@ class BR extends Instruction {
 
 class BT extends Instruction {
     execute() {
-        if (this.vm.S.pop()) this.vm.currentBlock.pc += this.args[0] - 1
+        if (this.vm.S.peek()){
+            this.vm.S.pop()
+        } this.vm.currentBlock.pc += this.args[0] - 1
         return true
     }
 }
 
 class BF extends Instruction {
     execute() {
-        if (!this.vm.S.pop()) this.vm.currentBlock.pc += this.args[0] - 1
+        if (!this.vm.S.peek()){
+            this.vm.S.pop()
+        } this.vm.currentBlock.pc += this.args[0] - 1
         return true
     }
 }
