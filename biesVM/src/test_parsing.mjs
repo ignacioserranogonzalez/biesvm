@@ -280,40 +280,40 @@ class HLT extends Instruction {
 
 class InstructionSet {
     constructor() {
-        this.instructions = {
-            LDV: () => new LDV(),
-            PRN: () => new PRN(),
-            BST: () => new BST(),
-            BLD: () => new BLD(),
-            LDF: () => new LDF(),
-            APP: () => new APP(),
-            RET: () => new RET(),
-            ADD: () => new ADD(),
-            POP: () => new POP(),
-            SWP: () => new SWP(),
-            NEG: () => new NEG(),
-            SGN: () => new SGN(),
-            EQ: () => new EQ(),
-            GT: () => new GT(),
-            GTE: () => new GTE(),
-            LT: () => new LT(),
-            LTE: () => new LTE(),
-            NOT: () => new NOT(),
-            SNT: () => new SNT(),
-            CAT: () => new CAT(),
-            TOS: () => new TOS(),
-            CST: () => new CST(),
-            INO: () => new INO(),
-            NOP: () => new NOP(),
-            BR: () => new BR(),
-            BT: () => new BT(),
-            BF: () => new BF(),
-            HLT: () => new HLT(),
-        }
+        this.instructions = new Map([
+            ['LDV', () => new LDV()],
+            ['PRN', () => new PRN()],
+            ['BST', () => new BST()],
+            ['BLD', () => new BLD()],
+            ['LDF', () => new LDF()],
+            ['APP', () => new APP()],
+            ['RET', () => new RET()],
+            ['ADD', () => new ADD()],
+            ['POP', () => new POP()],
+            ['SWP', () => new SWP()],
+            ['NEG', () => new NEG()],
+            ['SGN', () => new SGN()],
+            ['EQ', () => new EQ()],
+            ['GT', () => new GT()],
+            ['GTE', () => new GTE()],
+            ['LT', () => new LT()],
+            ['LTE', () => new LTE()],
+            ['NOT', () => new NOT()],
+            ['SNT', () => new SNT()],
+            ['CAT', () => new CAT()],
+            ['TOS', () => new TOS()],
+            ['CST', () => new CST()],
+            ['INO', () => new INO()],
+            ['NOP', () => new NOP()],
+            ['BR', () => new BR()],
+            ['BT', () => new BT()],
+            ['BF', () => new BF()],
+            ['HLT', () => new HLT()]
+        ]);
     }
 
     getInstruction(mnemonic) {
-        return this.instructions[mnemonic]() || null; // Llama a la función para obtener una nueva instancia
+        return this.instructions.get(mnemonic)?.();
     }
 }
 
