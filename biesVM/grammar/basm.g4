@@ -6,7 +6,8 @@ program : block*;
 block   : func inst* '$END';
 func    : '$FUN' '$' INT 'ARGS:' INT 'PARENT:' '$' INT;
 inst    : mnemonic arg*;
-arg     : INT | STR | funcArg | typeArg | listArg;
+arg     : INT | STR | SIGNED_INT | funcArg | typeArg | listArg;
+
 funcArg : '$' INT; 
 typeArg : TYPE;
 listArg : '[' (INT (',' INT)*)? ']';
@@ -39,7 +40,7 @@ mnemonic:
     | 'CST'
     | 'INO'
     | 'NOP'
-    | 'BR'
+    | 'BR' 
     | 'BT'
     | 'BF'
     | 'LNT'
@@ -52,6 +53,7 @@ mnemonic:
 // Lexer
 
 INT     : '-'? [0-9]+ ;
+SIGNED_INT : ('+' | '-')? INT;
 STR     : '"' ( ESC | ~('"' | '\n') )* '"' ;
 fragment ESC : '\\' '"' ;
 TYPE    : 'NUMBER' | 'LIST' | 'STRING' ;

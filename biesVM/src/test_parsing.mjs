@@ -280,21 +280,21 @@ class NOP extends Instruction {
 
 class BR extends Instruction {
     execute() {
-        this.vm.currentBlock.pc = this.args[0] - 1
+        this.vm.currentBlock.pc += this.args[0] - 1
         return true
     }
 }
 
 class BT extends Instruction {
     execute() {
-        if (this.vm.S.pop()) this.vm.currentBlock.pc = this.args[0] - 1
+        if (this.vm.S.pop()) this.vm.currentBlock.pc += this.args[0] - 1
         return true
     }
 }
 
 class BF extends Instruction {
     execute() {
-        if (!this.vm.S.pop()) this.vm.currentBlock.pc = this.args[0] - 1
+        if (!this.vm.S.pop()) this.vm.currentBlock.pc += this.args[0] - 1
         return true
     }
 }
@@ -436,11 +436,18 @@ class InstructionVisitor extends basmVisitor {
 
     visitArg(ctx) {
         if (ctx.INT()) return parseInt(ctx.INT().getText(), 10)
-        if (ctx.STR()) return ctx.STR().getText().replace(/^"|"$|"/g, '');
+        if (ctx.STR()) return ctx.STR().getText().replace(/^"|"$|"/g, '')
+        if (ctx.SIGNED_INT()) return this.handleSignedInt(ctx.SIGNED_INT().getText())
         if (ctx.funcArg()) return parseInt(ctx.funcArg().getText().slice(1), 10)
         if (ctx.listArg()) return this.visitList(ctx.listArg())
         else if(ctx.typeArg()) return ctx.typeArg().getText().toLowerCase()
         return null
+    }
+
+    handleSignedInt(signedInt) {
+        const sign = signedInt[0] === '+' ? 1 : -1;
+        const number = parseInt(signedInt.slice(1), 10);
+        return sign * number;
     }
 
     visitList(ctx) {

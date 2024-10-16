@@ -1,35 +1,7 @@
 $FUN $0 ARGS:0 PARENT:$0
-LDV 10      ; Cargar el primer número (10)
-BST 0 0     ; Guardar el primer número en memoria (dirección 0)
-LDV 20      ; Cargar el segundo número (20)
-BST 0 1     ; Guardar el segundo número en memoria (dirección 1)
-
-BLD 0 0     ; Cargar el primer número (desde la memoria, dirección 0)
-BLD 0 1     ; Cargar el segundo número (desde la memoria, dirección 1)
-SUB         ; Resta: pila = primer número - segundo número
-BST 0 2     ; Guardar el resultado de la resta en memoria (dirección 2)
-
-BLD 0 2     ; Cargar la diferencia (desde la memoria, dirección 2)
-LDV 0       ; Cargar 0 en la pila para compararlo con la diferencia
-GT          ; Si diferencia > 0, deja 1 en la pila, si no, deja 0
-BST 0 3     ; Guardar el resultado de la comparación en memoria (dirección 3)
-
-BLD 0 3     ; Cargar el resultado de la comparación (1 o 0) desde la memoria
-BLD 0 0     ; Cargar el primer número desde la memoria
-MUL         ; Si la comparación fue 1, el primer número sigue, si fue 0, es 0
-BST 0 4     ; Guardar este valor temporal en memoria (dirección 4)
-
-BLD 0 3     ; Cargar el resultado de la comparación (1 o 0) desde la memoria
-LDV 1       ; Cargar 1 para invertir el resultado
-SUB         ; Si era 1, ahora es 0, si era 0, ahora es 1
-BLD 0 1     ; Cargar el segundo número desde la memoria
-MUL         ; Si la comparación fue 0, el segundo número sigue, si fue 1, es 0
-BST 0 5     ; Guardar este valor temporal en memoria (dirección 5)
-
-BLD 0 4     ; Cargar el primer resultado (mayor si fue mayor)
-BLD 0 5     ; Cargar el segundo resultado (mayor si fue mayor)
-ADD         ; Sumar ambos valores, uno será el mayor y el otro será 0
-
-PRN         ; Imprimir el valor mayor
-HLT         ; Terminar ejecución
+LDV 666
+BR +2
+LDV 888
+PRN
+HLT
 $END
