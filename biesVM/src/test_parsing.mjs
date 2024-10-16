@@ -136,7 +136,6 @@ class APP extends Instruction {
         this.vm.setCurrentBlock(this.vm.C.peekBlock(fun));
 
         this.vm.currentBlock.pc = 0;
-        console.log(this.vm.B.frames)
 
         return false;
     }
