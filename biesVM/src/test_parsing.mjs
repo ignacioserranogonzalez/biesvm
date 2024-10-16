@@ -272,6 +272,75 @@ class BF extends Instruction {
     }
 }
 
+class LNT extends Instruction {
+    execute() {
+        const list = this.vm.S.pop()
+
+        const isNullOrEmpty = !Array.isArray(list) || list.length === 0;
+        this.vm.S.push(isNullOrEmpty ? 1 : 0);
+        return true;
+    }
+}
+
+class LIN extends Instruction {
+    execute() {
+        const value = this.vm.S.pop();
+        const list = this.vm.S.pop();
+
+        if (Array.isArray(list)) {
+            list.unshift(value);
+            this.vm.S.push(list);
+        } else {
+            throw new Error("Top of stack is not a list");
+        }
+        return true;
+    }
+}
+
+class LTK extends Instruction {
+    execute() {
+        const index = this.vm.S.pop()
+        const list = this.vm.S.pop()
+
+        if (Array.isArray(list)) {
+            const value = list[index]
+            this.vm.S.push(value !== undefined ? value : null)
+        } else {
+            throw new Error("Top of stack is not a list");
+        }
+        return true;
+    }
+}
+
+class LRK extends Instruction {
+    execute() {
+        const index = this.vm.S.pop();
+        const list = this.vm.S.pop();
+
+        if (Array.isArray(list)) {
+            if (index >= 0 && index < list.length) {
+                const remainder = [...list.slice(index)];
+                this.vm.S.push(remainder);
+            } else {
+                throw new Error("Index out of range");
+            }
+        } else {
+            throw new Error("Top of stack is not a list");
+        }
+        return true;
+    }
+}
+
+class TOL extends Instruction {
+    execute() {
+        const value = this.vm.S.pop();
+
+        const list = Array.isArray(value) ? value : [value];
+        this.vm.S.push(list);
+        return true;
+    }
+}
+
 class HLT extends Instruction {
     execute() {
         throw new Error('\n>>> Program terminated by HLT')
@@ -308,6 +377,11 @@ class InstructionSet {
             ['BR', () => new BR()],
             ['BT', () => new BT()],
             ['BF', () => new BF()],
+            ['LNT', () => new LNT()],
+            ['LIN', () => new LIN()],
+            ['LTK', () => new LTK()],
+            ['LRK', () => new LRK()],
+            ['TOL', () => new TOL()],
             ['HLT', () => new HLT()]
         ]);
     }
@@ -334,9 +408,21 @@ class InstructionVisitor extends basmVisitor {
         if (ctx.INT()) return parseInt(ctx.INT().getText(), 10)
         if (ctx.STR()) return ctx.STR().getText().replace(/^"|"$|"/g, '');
         if (ctx.funcArg()) return parseInt(ctx.funcArg().getText().slice(1), 10)
+        if (ctx.listArg()) return this.visitList(ctx.listArg())
         else if(ctx.typeArg()) return ctx.typeArg().getText().toLowerCase()
         return null
     }
+
+    visitList(ctx) {
+        const elements = ctx.INT()
+        const list = []
+    
+        for (let i = 0; i < elements.length; i++) {
+            list.push(parseInt(elements[i].getText(), 10))
+        }
+        
+        return list;
+    }    
 
     visitFunc(ctx) {
         this.context = ctx.INT(0).getText()

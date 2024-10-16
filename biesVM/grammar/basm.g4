@@ -4,11 +4,13 @@ grammar basm;
 
 program : block*;
 block   : func inst* '$END';
-func    : '$FUN' '$' INT 'ARGS:' INT 'PARENT:' '$' INT ;
-inst    : mnemonic arg* ;
-arg     : INT | STR | funcArg | typeArg;
+func    : '$FUN' '$' INT 'ARGS:' INT 'PARENT:' '$' INT;
+inst    : mnemonic arg*;
+arg     : INT | STR | funcArg | typeArg | listArg;
 funcArg : '$' INT; 
-typeArg : TYPE ;
+typeArg : TYPE;
+listArg : '[' (INT (',' INT)*)? ']';
+
 mnemonic: 
       'LDV' 
     | 'PRN' 
@@ -37,12 +39,17 @@ mnemonic:
     | 'BR'
     | 'BT'
     | 'BF'
+    | 'LNT'
+    | 'LIN'
+    | 'LTK'
+    | 'LRK'
+    | 'TOL'
     | 'HLT';
 
 // Lexer
 
 INT     : '-'? [0-9]+ ;
-STR : '"' ( ESC | ~('"' | '\n') )* '"' ;
+STR     : '"' ( ESC | ~('"' | '\n') )* '"' ;
 fragment ESC : '\\' '"' ;
 TYPE    : 'NUMBER' | 'LIST' | 'STRING' ;
 COMMENT : ';' ~[\r\n]* -> skip ;
