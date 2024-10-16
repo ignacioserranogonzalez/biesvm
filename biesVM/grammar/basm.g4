@@ -35,6 +35,8 @@ mnemonic:
     | 'INO'
     | 'NOP'
     | 'BR'
+    | 'BT'
+    | 'BF'
     | 'HLT';
 
 // Lexer

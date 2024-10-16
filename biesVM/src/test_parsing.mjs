@@ -258,6 +258,20 @@ class BR extends Instruction {
     }
 }
 
+class BT extends Instruction {
+    execute() {
+        if (this.vm.S.pop()) this.vm.currentBlock.pc = this.args[0] - 1
+        return true
+    }
+}
+
+class BF extends Instruction {
+    execute() {
+        if (!this.vm.S.pop()) this.vm.currentBlock.pc = this.args[0] - 1
+        return true
+    }
+}
+
 class HLT extends Instruction {
     execute() {
         throw new Error('\n>>> Program terminated by HLT')
@@ -292,6 +306,8 @@ class InstructionSet {
             INO: () => new INO(),
             NOP: () => new NOP(),
             BR: () => new BR(),
+            BT: () => new BT(),
+            BF: () => new BF(),
             HLT: () => new HLT(),
         }
     }
