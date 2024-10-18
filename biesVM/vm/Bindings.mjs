@@ -5,12 +5,8 @@ class Bindings {
     }
 
     // Crea un nuevo contexto en la posición k y lo inicializa con un array vacío
-    createFrame(k) {
-        if (!this.frames[k]) {
-            this.frames[k] = []; // Inicializa el contexto si no existe
-        } else {
-            throw new Error("Context already exists at this position"); // Opcional: maneja el caso en que el contexto ya existe
-        }
+    createFrame() {
+        this.frames.push([]); // Crea y agrega un nuevo contexto
     }
 
     // Elimina el contexto en la posición k

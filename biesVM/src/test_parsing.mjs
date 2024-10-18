@@ -125,10 +125,7 @@ class APP extends Instruction {
 
         if (this.vm.S.length < k) throw new Error("Not enough arguments on the stack");
         
-        try{
-            this.vm.B.createFrame(fun)
-        } catch(e){}
-        
+        this.vm.B.createFrame(fun)
 
         for (let i = 0; i < k; i++) {
             const value = this.vm.S.pop();
