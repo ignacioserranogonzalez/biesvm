@@ -124,12 +124,16 @@ class APP extends Instruction {
         const k = this.args[0];
 
         if (this.vm.S.length < k) throw new Error("Not enough arguments on the stack");
-        this.vm.B.createFrame(fun);
+        
+        try{
+            this.vm.B.createFrame(fun)
+        } catch(e){}
+        
 
         for (let i = 0; i < k; i++) {
-            const value = this.vm.S.pop(); 
+            const value = this.vm.S.pop();
     
-            this.vm.B.pushValue(fun, value); // Cambiar el nivel si es necesario
+            this.vm.B.setValue(fun, i, value);
         }
 
         this.vm.D.pushContext(this.vm.currentBlock.func, this.vm.currentBlock.pc + 1);

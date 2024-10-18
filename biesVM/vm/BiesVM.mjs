@@ -60,6 +60,7 @@ class BiesVM {
     executeBlock(block) {
         // console.log(`>>> Executing Block - Function: $${block.func}, Args: ${block.args}, Parent: $${block.parent}`);
         while (block.peek(block.pc).execute()) {
+            // console.log(block.peek(block.pc))
             block.pc++
         }
     }
