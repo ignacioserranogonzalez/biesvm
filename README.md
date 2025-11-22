@@ -5,8 +5,7 @@ Universidad Nacional de Costa Rica, Escuela de Informática
 
 _Implementado en el marco del curso de Paradigmas de Programación, dirigido por el profesor Carlos Loría Saenz_
 
-## Autor
-- Ignacio Serrano Gonzalez
+Autoría: Ignacio Serrano González
 
 ## Descripción
 Máquina virtual básica del lenguaje tipo ensamblador Bies. Interpreta su sintaxis y muestra la salida de su ejecución. Implementado en NodeJS y antlr4
