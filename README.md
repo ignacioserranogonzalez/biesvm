@@ -1,6 +1,6 @@
 # biesvm
 
-EIF400-II-2024 Paradigmas de Programación, Grupo 02-1PM
+EIF400-II-2024 Paradigmas de Programación, Grupo 02-1PM  
 Universidad Nacional de Costa Rica, Escuela de Informática
 
 _Implementado en el marco del curso de Paradigmas de Programación, dirigido por el profesor Carlos Loría Saenz_
