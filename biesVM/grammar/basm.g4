@@ -1,7 +1,5 @@
 grammar basm;
 
-// Parser
-
 program : block*;
 block   : func inst* '$END';
 func    : '$FUN' '$' INT 'ARGS:' INT 'PARENT:' '$' INT;
@@ -51,8 +49,6 @@ mnemonic:
     | 'STK'
     | 'SRK'
     | 'HLT';
-
-// Lexer
 
 INT     : '-'? [0-9]+ ;
 SIGNED_INT : ('+' | '-')? INT;

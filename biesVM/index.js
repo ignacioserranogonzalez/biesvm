@@ -1,3 +1,3 @@
-import test_parsing from './src/test_parsing.mjs'
+import parse from './src/ast/parsing.js'
 
-test_parsing()
+parse()
