@@ -3,7 +3,7 @@ import InstructionSet from './InstructionSet.js'
 import BiesVM from '../vm/BiesVM.js'
 import Block from '../vm/Block.js'
 
-class InstructionVisitor extends basmVisitor {
+export default class InstructionVisitor extends basmVisitor {
 
     constructor() {
         super()
@@ -73,5 +73,3 @@ class InstructionVisitor extends basmVisitor {
     }
     
 }
-
-export default InstructionVisitor

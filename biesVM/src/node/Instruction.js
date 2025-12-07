@@ -1,3 +1,5 @@
+import BiesVM from '../vm/BiesVM.js'
+
 export default class Instruction {
     constructor() {
         if (this.constructor === Instruction) {

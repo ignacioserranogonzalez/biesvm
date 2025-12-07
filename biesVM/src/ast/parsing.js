@@ -18,13 +18,13 @@ function parse(input_file = default_input_file) {
     const tokens = new antlr4.CommonTokenStream(lexer)
     const parser = new basmParser(tokens)
     parser.buildParseTrees = true
-
+    
     const ast = parser.program()
     const visitor = new InstructionVisitor()
-
-    try {
+    
+    try {   
         visitor.visit(ast)
-        vm.execute() // BiesVM is not defined
+        vm.execute()
     } catch (error) {
         console.error(error.message)
     }

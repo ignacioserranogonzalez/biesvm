@@ -4,7 +4,7 @@
  * Represents a context dump used by the Bies virtual machine to manage execution contexts.
  * Stores frames and program counters (PC) for managing function calls and returns.
  */
-class Dump {
+export default class Dump {
     constructor() {
         this.dump = [];
     }
@@ -34,6 +34,3 @@ class Dump {
         return this.dump[this.dump.length - 1];
     }
 }
-
-export default Dump
-

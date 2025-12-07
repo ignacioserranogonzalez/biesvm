@@ -2,7 +2,7 @@
  * Represents a block of code within the Bies virtual machine.
  * Each block contains instructions and manages the execution context.
  */
-class Block {
+export default class Block {
     /**
      * Creates an instance of a Block.
      * @param {number} func - The function identifier associated with this block.
@@ -68,5 +68,3 @@ class Block {
         return this.code.length;
     }
 }
-
-export default Block;

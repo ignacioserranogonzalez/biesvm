@@ -2,7 +2,7 @@
  * Represents a collection of code blocks within the Bies virtual machine.
  * Manages loading and accessing code blocks for execution.
  */
-class Code {
+export default class Code {
     constructor() {
         this.code = [];
     }
@@ -63,5 +63,3 @@ class Code {
         return this.code.length;
     }
 }
-
-export default Code;

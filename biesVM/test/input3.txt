@@ -1,0 +1,5 @@
+$FUN $0 ARGS: 0 PARENT: $0
+LDV 6
+PRN
+HLT
+$END

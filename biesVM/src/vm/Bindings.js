@@ -1,4 +1,4 @@
-class Bindings {
+export default class Bindings {
     constructor() {
         this.frames = []; // Array que contendrá los contextos
         this.createFrame(0)
@@ -54,5 +54,3 @@ class Bindings {
         return null; // Retorna null si no se encuentra
     }
 }
-
-export default Bindings;

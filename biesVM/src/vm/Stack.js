@@ -4,7 +4,7 @@
  * Represents a simple stack data structure used by the Bies virtual machine.
  * Provides methods to manipulate the stack with standard operations.
  */
-class Stack {
+export default class Stack {
     constructor() {
         this.stack = [];
     }
@@ -46,4 +46,3 @@ class Stack {
         return this.stack[this.stack.length - 1];
     }
 }
-export default Stack
